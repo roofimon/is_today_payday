@@ -19,13 +19,16 @@ class PayMaster
   end
 
   def when_is_my_payday
+    early_payment_message = "An actual payday is weekend so your Pay Master will pay you sooner and your payday is"
+    paymonth  = @payday.month.to_s.rjust(2,"0")
+    payyear   = @payday.year.to_s
     case
     when @payday.sunday?
-      "An actual payday is weekend so your Pay Master will pay you sooner and your payday is Friday, 24-"+@payday.month.to_s.rjust(2,"0")+"-"+@payday.year.to_s
+      "#{early_payment_message} Friday, 24-#{paymonth}-#{payyear}"
     when @payday.saturday?
-      "An actual payday is weekend so your Pay Master will pay you sooner and your payday is Friday, 25-"+@payday.month.to_s.rjust(2,"0")+"-"+@payday.year.to_s
+      "#{early_payment_message} Friday, 25-#{paymonth}-#{payyear}"
     else
-      @payday.strftime('%A')+", 26-"+@payday.month.to_s.rjust(2,"0")+"-"+@payday.year.to_s
+      @payday.strftime('%A')+", 26-#{paymonth}-#{payyear}"
     end
   end
 end
