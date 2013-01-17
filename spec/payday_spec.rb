@@ -51,9 +51,17 @@ describe PayMaster do
   end
 
   describe "today is not payday" do
-    it "should tell me that 'Sorry dude you have to wait for x days'" do
-      Date.stub!(:today).and_return(Date.rfc2822('Thu, 14 Feb 2013 00:00:00 +0000'))
-      pay_master.is_payday().should eq("Sorry dude you have to wait for 12 days")
+    context "when payday longer than 9 days" do
+      it "should tell me that 'Sorry dude you have to wait for xx days'" do
+        Date.stub!(:today).and_return(Date.rfc2822('Thu, 14 Feb 2013 00:00:00 +0000'))
+        pay_master.is_payday().should eq("Sorry dude you have to wait for 12 days")
+      end
+    end
+    context "when payday shorter than 10 days"  do
+      it "should tell me that 'Sorry dude you have to wait for 0x days'" do
+        Date.stub!(:today).and_return(Date.rfc2822('Wed, 20 Feb 2013 00:00:00 +0000'))
+        pay_master.is_payday().should eq("Sorry dude you have to wait for 06 days")
+      end
     end
   end
 
