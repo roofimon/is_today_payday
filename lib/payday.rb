@@ -1,12 +1,13 @@
 class PayMaster
-  attr_writer :current_date
+  attr_writer :current_date, :payday
   def initialize
     @current_date = Date.today
+    @payday = Date.new(@current_date.year, @current_date.month, 26)
   end
 
-  def today_is_payday(today)
+  def is_payday
     case
-      when today.saturday?||today.sunday?
+      when @current_date.saturday?||@current_date.sunday?
         "Stupid dude, who's gonna pay you on weekend"
       else
         "Today is payday dude, you gonna be rich"
@@ -14,14 +15,13 @@ class PayMaster
   end
 
   def when_is_my_payday
-    payday = Date.new(@current_date.year, @current_date.month, 26)
     case
-    when payday.sunday?
-      "An actual payday is weekend so your Pay Master will pay you sooner and your payday is Friday, 24-"+payday.month.to_s.rjust(2,"0")+"-"+payday.year.to_s
-    when payday.saturday?
-      "An actual payday is weekend so your Pay Master will pay you sooner and your payday is Friday, 25-"+payday.month.to_s.rjust(2,"0")+"-"+payday.year.to_s
+    when @payday.sunday?
+      "An actual payday is weekend so your Pay Master will pay you sooner and your payday is Friday, 24-"+@payday.month.to_s.rjust(2,"0")+"-"+@payday.year.to_s
+    when @payday.saturday?
+      "An actual payday is weekend so your Pay Master will pay you sooner and your payday is Friday, 25-"+@payday.month.to_s.rjust(2,"0")+"-"+@payday.year.to_s
     else
-      payday.strftime('%A')+", 26-"+payday.month.to_s.rjust(2,"0")+"-"+payday.year.to_s
+      @payday.strftime('%A')+", 26-"+@payday.month.to_s.rjust(2,"0")+"-"+@payday.year.to_s
     end
   end
 end

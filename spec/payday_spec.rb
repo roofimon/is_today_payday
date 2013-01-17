@@ -30,20 +30,30 @@ describe PayMaster do
 
   describe "today is payday" do
     it "should tell me that 'Today is payday dude, you gonna be rich :)'" do
-      pay_master.today_is_payday(Date.today).should eq("Today is payday dude, you gonna be rich")
+      Date.stub!(:today).and_return(Date.rfc2822('Tue, 26 Feb 2013 00:00:00 +0000'))
+      pay_master.is_payday().should eq("Today is payday dude, you gonna be rich")
     end
   end
 
   describe "today is weekend" do
     context "saturday" do
       it "should tell me that 'Stupid dude, who's gonna pay you on weekend'" do
-        pay_master.today_is_payday(Date.rfc2822('Sat, 12 Jan 2013 00:00:00 +0000')).should eq(weekend_payment_warning)
+        Date.stub!(:today).and_return(Date.rfc2822('Sat, 26 Oct 2013 00:00:00 +0000'))
+        pay_master.is_payday().should eq(weekend_payment_warning)
       end
     end
     context "sunday" do
       it "should tell me that 'Stupid dude, who's gonna pay you on weekend'" do
-        pay_master.today_is_payday(Date.rfc2822('Sun, 13 Jan 2013 00:00:00 +0000')).should eq(weekend_payment_warning)
+        Date.stub!(:today).and_return(Date.rfc2822('Sun, 26 May 2013 00:00:00 +0000'))
+        pay_master.is_payday().should eq(weekend_payment_warning)
       end
+    end
+  end
+
+  describe "today is not payday" do
+    it "should tell me that 'Sorry dude you have to wait for x days'" do
+      Date.stub!(:today).and_return(Date.rfc2822('Thu, 14 Feb 2013 00:00:00 +0000'))
+      pay_master.is_payday().should eq("Sorry dude you have to wait for 12 days")
     end
   end
 
