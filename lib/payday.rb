@@ -1,5 +1,6 @@
 class PayMaster
-  attr_writer :current_date, :payday
+  @current_date
+  @payday
 
   def initialize
     @current_date = Date.today
@@ -13,8 +14,8 @@ class PayMaster
       when @current_date == @payday
         "Today is payday dude, you gonna be rich"
       else
-        number_of_days = ((@payday-@current_date).to_i).to_s.rjust(2, "0")
-        "Sorry dude you have to wait for #{number_of_days} days"
+        days_to_wait = ((@payday-@current_date).to_i)
+        "Sorry dude you have to wait for #{days_to_wait} days"
     end
   end
 

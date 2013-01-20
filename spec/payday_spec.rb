@@ -60,7 +60,7 @@ describe PayMaster do
     context "when payday shorter than 10 days"  do
       it "should tell me that 'Sorry dude you have to wait for 0x days'" do
         Date.stub!(:today).and_return(Date.rfc2822('Wed, 20 Feb 2013 00:00:00 +0000'))
-        pay_master.is_payday().should eq("Sorry dude you have to wait for 06 days")
+        pay_master.is_payday().should eq("Sorry dude you have to wait for 6 days")
       end
     end
   end
